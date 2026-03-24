@@ -656,5 +656,34 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id: "hj2847e8-2321-b4yh-cfyjhd8890",
+    image: "images/products/backpack.jpg",
+    name: "Laptop Bag 15.6 inch - Black",
+    rating: {
+      stars: 4.5,
+      count: 1470
+    },
+    priceCents: 2850,
+    keywords: [
+      "backpack",
+      "bag",
+      "laptop bag"
+    ]
+  },
+  {
+    id: "pj2717e8-9378-b4yh-zfyihd2895",
+    image: "images/products/umbrella.jpg",
+    name: "Umbrella for Men & Women UV & Sun Protection",
+    rating: {
+      stars: 4,
+      count: 560
+    },
+    priceCents: 489,
+    keywords: [
+      "umbrella",
+      "rain"
+    ]
   }
 ];
