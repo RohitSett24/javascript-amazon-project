@@ -30,3 +30,11 @@ export function addToCart(productId) {
     })
   }
 }
+
+export function deleteFromCart(productId) {
+  cart.forEach((cartItem, index) => {
+    if(productId === cartItem.productId) {
+      cart.splice(index, 1);
+    }
+  })
+}  
