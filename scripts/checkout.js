@@ -1,6 +1,7 @@
 import {cart, deleteFromCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {convertMoney} from './utils/money.js';
+import {updateCartQuantity} from './utils/cartQuantity.js';
 
 displayCartItems();
 
@@ -110,4 +111,8 @@ function displayCartItems() {
         displayCartItems();
       });   
     })
-} 
+}
+
+const quantity = updateCartQuantity(cart);
+console.log(quantity);
+document.querySelector('.js-checkout-item-quantity').innerHTML = `${quantity} items`;
