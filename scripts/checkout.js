@@ -108,6 +108,6 @@ function displayCartItems() {
         const { productId } =  deleteLink.dataset;
         deleteFromCart(productId);
         displayCartItems();
-      });
+      });   
     })
-}
+} 
