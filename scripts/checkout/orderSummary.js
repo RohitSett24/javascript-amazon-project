@@ -1,22 +1,18 @@
 import {cart, deleteFromCart, calculateCartQuantity, updateQuantity, updateDeliveryOption} from '../../data/cart.js';
-import {products} from '../../data/products.js';
 import {convertMoney} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import {deliveryOptions} from '../../data/deliveryOptions.js';
+import {getDeliveryOption, deliveryOptions} from '../../data/deliveryOptions.js';
+import {getProduct} from '../../data/products.js';
 
-export function displayCartItems() {
+export function renderOrderSummary() {
   updateCheckoutItemQuantity();
   
   let cartHTML = '';
 
   cart.forEach((cartItem) => {
-    const productId = cartItem.productId;
+    let matchingProduct = getProduct(cartItem);
 
-    let matchingProduct = products.find(product => productId === product.id);
-
-    const deliveryOptionId = cartItem.deliveryOptionId;
-
-    let deliveryOption = deliveryOptions.find(option => deliveryOptionId === option.id);
+    const deliveryOption = getDeliveryOption(cartItem);
 
     const today = dayjs();
     const deliveryDate = today.add(
@@ -83,7 +79,7 @@ export function displayCartItems() {
       deleteLink.addEventListener('click', () => {
         const { productId } =  deleteLink.dataset;
         deleteFromCart(productId);
-        displayCartItems();
+        renderOrderSummary();
         updateCheckoutItemQuantity();
       });   
     });
@@ -124,7 +120,7 @@ export function displayCartItems() {
     option.addEventListener('click', () => {
       const {productId, deliveryOptionId} = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
-      displayCartItems();
+      renderOrderSummary();
     });
   });
 
@@ -185,7 +181,7 @@ function updateQuantityInCheckout(itemContainer, productId) {
     itemContainer.classList.remove('is-editing-quantity');
   } else if(updatedQuantity === 0) {
     deleteFromCart(productId);
-    displayCartItems();
+    renderOrderSummary();
     updateCheckoutItemQuantity();
   } else if(updatedQuantity < 0) {
     alert('Not a valid quantity');
