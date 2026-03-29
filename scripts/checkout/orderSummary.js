@@ -3,11 +3,12 @@ import {convertMoney} from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {getDeliveryOption, deliveryOptions} from '../../data/deliveryOptions.js';
 import {getProduct} from '../../data/products.js';
+import {renderPaymentSummary} from './paymentSummary.js';
 
 export function renderOrderSummary() {
   updateCheckoutItemQuantity();
   
-  let cartHTML = '';
+  let cartHTML = ''; 
 
   cart.forEach((cartItem) => {
     let matchingProduct = getProduct(cartItem);
@@ -80,6 +81,7 @@ export function renderOrderSummary() {
         const { productId } =  deleteLink.dataset;
         deleteFromCart(productId);
         renderOrderSummary();
+        renderPaymentSummary();
         updateCheckoutItemQuantity();
       });   
     });
@@ -101,6 +103,7 @@ export function renderOrderSummary() {
       const itemContainer = saveLink.closest('.cart-item-container');
       
       updateQuantityInCheckout(itemContainer, productId);
+      renderPaymentSummary();
     })
   });
 
@@ -121,6 +124,7 @@ export function renderOrderSummary() {
       const {productId, deliveryOptionId} = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 
