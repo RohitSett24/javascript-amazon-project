@@ -15,10 +15,27 @@ function displayCartItems() {
 
     let matchingProduct = products.find(product => productId === product.id);
 
+    const deliveryOptionId = cartItem.deliveryOptionId;
+
+    let deliveryOption;
+
+    deliveryOptions.forEach((option) => {
+      if(deliveryOptionId === option.id) {
+        deliveryOption = option;
+      }
+    })
+
+    const today = dayjs();
+    const deliveryDate = today.add(
+      deliveryOption.deliveryDays, 
+      'days'
+    );
+    const dateString = deliveryDate.format('dddd, MMMM D');
+    
     cartHTML += `
       <div class="cart-item-container">
         <div class="delivery-date">
-          Delivery date: Tuesday, June 21
+          Delivery date: ${dateString}
         </div>
 
         <div class="cart-item-details-grid">
