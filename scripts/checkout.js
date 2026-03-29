@@ -1,4 +1,4 @@
-import {cart, deleteFromCart, calculateCartQuantity, updateQuantity} from '../data/cart.js';
+import {cart, deleteFromCart, calculateCartQuantity, updateQuantity, updateDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {convertMoney} from './utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -17,19 +17,13 @@ function displayCartItems() {
 
     const deliveryOptionId = cartItem.deliveryOptionId;
 
-    let deliveryOption;
-
-    deliveryOptions.forEach((option) => {
-      if(deliveryOptionId === option.id) {
-        deliveryOption = option;
-      }
-    })
+    let deliveryOption = deliveryOptions.find(option => deliveryOptionId === option.id);
 
     const today = dayjs();
     const deliveryDate = today.add(
       deliveryOption.deliveryDays, 
       'days'
-    );
+    ); 
     const dateString = deliveryDate.format('dddd, MMMM D');
     
     cartHTML += `
@@ -125,6 +119,15 @@ function displayCartItems() {
       }
     })
   });
+
+  document.querySelectorAll('.js-delivery-option')
+  .forEach((option) => {
+    option.addEventListener('click', () => {
+      const {productId, deliveryOptionId} = option.dataset;
+      updateDeliveryOption(productId, deliveryOptionId);
+    });
+  });
+
 }
 
 function deliveryOptionsHTML(matchingProduct, cartItem) {
@@ -146,7 +149,9 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
 
     deliveryOptionsHtml += ` 
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+      data-product-id = "${matchingProduct.id}"
+      data-delivery-option-id = "${deliveryOption.id}">
         <input type="radio" ${isChecked ? 'checked' : ''}
           class="delivery-option-input"
           name="delivery-option-${matchingProduct.id}">
@@ -186,3 +191,4 @@ function updateQuantityInCheckout(itemContainer, productId) {
     alert('Not a valid quantity');
   }
 }
+
