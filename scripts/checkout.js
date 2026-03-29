@@ -125,6 +125,7 @@ function displayCartItems() {
     option.addEventListener('click', () => {
       const {productId, deliveryOptionId} = option.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
+      displayCartItems();
     });
   });
 
