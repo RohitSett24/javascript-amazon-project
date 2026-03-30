@@ -26,10 +26,17 @@ export function getDeliveryOption(cartItem) {
 
 export function calculateDeliveryDate(deliveryOption) {
   const today = dayjs();
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDays, 
-    'days'
-  ); 
+  let deliveryDays = deliveryOption.deliveryDays;
+  let deliveryDate = today;
+  
+  while(deliveryDays > 0) {
+    deliveryDate = deliveryDate.add(1, 'day');
+
+    if(deliveryDate.format('dddd') !== 'Saturday' && deliveryDate.format('dddd') !== 'Sunday'){
+      deliveryDays--;
+    }
+  }
+  
   const dateString = deliveryDate.format('dddd, MMMM D');
 
   return dateString;
