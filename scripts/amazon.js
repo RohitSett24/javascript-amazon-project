@@ -90,7 +90,9 @@ document.querySelectorAll('.js-add-to-cart-btn')
     button.addEventListener('click', () => {
       const { productId } = button.dataset;
       
-      addToCart(productId);
+      const selectElement = document.querySelector(`.js-quantity-selector-${productId}`);
+      const quantity = Number(selectElement.value);
+      addToCart(productId, quantity);
 
       updateCartDisplayCount();
 

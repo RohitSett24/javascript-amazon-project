@@ -1,13 +1,16 @@
-export const cart = JSON.parse(localStorage.getItem('cart')) || [];
+export let cart;
+
+loadFromStorage();
+
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+}
 
 function saveCartToStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function addToCart(productId) {
-  const selectElement = document.querySelector(`.js-quantity-selector-${productId}`);
-  const quantity = Number(selectElement.value);
-
+export function addToCart(productId, quantity) {
   let matchingItem = cart.find(item => productId === item.productId);
 
   if(matchingItem) {
