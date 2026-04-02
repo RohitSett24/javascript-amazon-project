@@ -1,3 +1,5 @@
 export function convertMoney(priceInCents) {
-  return (Math.round(priceInCents) / 100).toFixed(2);
+  const roundedCents = (priceInCents >= 0) ? Math.round(priceInCents) : -Math.round(Math.abs(priceInCents));
+
+  return (roundedCents / 100).toFixed(2);
 }

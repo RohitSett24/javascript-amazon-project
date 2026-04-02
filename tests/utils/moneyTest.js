@@ -16,4 +16,12 @@ describe('test suite: convertMoney', () => {
   it('rounds down to the nearest cent', () => {
     expect(convertMoney(2000.4)).toEqual('20.00');
   });
+
+  it('works with negative number', () => {
+    expect(convertMoney(-1525)).toEqual('-15.25');
+  })
+
+  it('rounds the negative number', () => {
+    expect(convertMoney(-1000.5)).toEqual('-10.01');
+  })
 });
