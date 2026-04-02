@@ -93,6 +93,23 @@ describe('test suite: renderOrderSummary', () => {
     expect(cart[0].productId).toEqual(productId2);
   });
 
+  it('updates the delivery option', () => {
+    document.querySelector(`.js-delivery-option[data-product-id="${productId1}"][data-delivery-option-id="3"]`).click();
+    
+    const inputElement = document.querySelector(`.js-delivery-option[data-product-id="${productId1}"][data-delivery-option-id="3"] input`);
+
+    expect(inputElement.checked).toEqual(true);
+    expect(cart.length).toEqual(2);
+    expect(cart[0].productId).toEqual(productId1);
+    expect(cart[0].deliveryOptionId).toEqual('3');
+    expect(
+      document.querySelector('.js-shipping-cost').innerText
+    ).toEqual('$14.98');
+    expect(
+      document.querySelector('.js-total-cost').innerText
+    ).toEqual('$63.50');
+  });
+
   afterEach(() => {
     document.querySelector('.js-test-container')
     .innerHTML = '';
